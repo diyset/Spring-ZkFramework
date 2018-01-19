@@ -1,0 +1,98 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="new page title" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm')@init('vmd.EditKaryawanVmd')">
+		<hlayout>
+			<button label="Batal" onClick="@command('back')" />
+			<button label="Simpan" onClick="@command('save')" />
+		</hlayout>
+		<space />
+		<grid>
+			<columns>
+				<column label="" width="300px" />
+				<column label="" width="250px" />
+				<column label="" width="300px" />
+				<column label="" width="150px" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Nik" />
+					<textbox constraint="no empty : harus diisi"
+						value="@load(vm.mstKaryawanHeaderDto.nik) @save(vm.mstKaryawanHeaderDto.nik,before='save')"
+						readonly="@load(vm.mstKaryawanHeaderDto.nik eq null ? false:true)">
+					</textbox>
+				</row>
+				<row>
+					<label value="Nama" />
+					<textbox constraint="no empty : harus diisi"
+						value="@bind(vm.mstKaryawanHeaderDto.namaKaryawan)">
+					</textbox>
+					<label value="Tanggal Join" />
+					<datebox format="yyyy-MMM-dd"
+						value="@bind(vm.mstKaryawanHeaderDto.tanggalJoin)" />
+				</row>
+				<row>
+					<label value="Jenis Kelamin" />
+					<radiogroup id="rg2"
+						selectedItem="@bind(vm.mstKaryawanHeaderDto.jenisKelamin)">
+						<radio radiogroup="rg2" value="Laki-Laki"
+							label="Laki" />
+						<radio radiogroup="rg2" value="Perempuan"
+							label="Perempuan" />
+					</radiogroup>
+					<label value="Tanggal Lahir" />
+					<datebox format="yyyy-MMM-dd"
+						value="@bind(vm.mstKaryawanHeaderDto.tanggalLahir)" />
+				</row>
+				<row>
+					<label value="Email" />
+					<textbox constraint="/.+@.+\.[a-z]+/ : Isi dengan format Email"
+						value="@bind(vm.mstKaryawanHeaderDto.emailKaryawan)">
+					</textbox>
+					<label value="Usia"/>
+					<textbox readonly="true" value="@load(vm.mstKaryawanHeaderDto.usia)" width="100px"/>
+				</row>
+				<row>
+					<label value="Gaji" />
+					<decimalbox constraint="no empty : harus diisi"
+						value="@bind(vm.mstKaryawanHeaderDto.gajiKaryawan)"
+						format="###,###.##" />
+				</row>
+				<row>
+					<label value="Provinsi" />
+					<combobox constraint="no empty : harus diisi"
+						model="@load(vm.mstProvinsiDtos)"
+						selectedItem="@save(vm.mstProvinsiDto)"
+						value="@load(vm.mstProvinsiDto.namaProvinsi)"
+						onSelect="@command('findkota')">
+						<template name="model">
+							<comboitem label="@load(each.namaProvinsi)"
+								value="@load(each.kodeProvinsi)">
+							</comboitem>
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label value="Kota" />
+					<combobox constraint="no empty : harus diisi"
+						model="@load(vm.mstKotaDtos)" selectedItem="@save(vm.mstKotaDto)"
+						value="@load(vm.mstKotaDto.namaKota)"
+						disabled="@load(vm.mstProvinsiDto.namaProvinsi eq null ?  true:false">
+						<template name="model">
+							<comboitem label="@load(each.namaKota)"
+								value="@load(each.kodeKota)">
+							</comboitem>
+						</template>
+					</combobox>
+				</row>
+			</rows>
+		</grid>
+		<space/>
+		<hlayout>
+			<button label="Tambah" />
+			<button label="Hapus" />
+		</hlayout>
+		
+	</window>
+</zk>

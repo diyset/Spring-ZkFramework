@@ -1,0 +1,28 @@
+<?page title="Karyawan" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Karyawan" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('vmd.KaryawanVmd')">
+		<hlayout>
+			<button label="Ubah" onClick="@command('edit')"/>
+			<button label="Tambah" onClick="@command('add')" />
+		</hlayout>
+		<space />
+		
+		<listbox model="@load(vm.mstKaryawanHeaderDtos)"
+			selectedItem="@bind(vm.mstKaryawanHeaderDto)" mold="paging" pageSize="10" autopaging="true">
+			<listhead style="color:blue">
+				<listheader label="NIK" sort="auto" />
+				<listheader label="Nama" sort="auto" />
+				<listheader label="Email" sort="auto" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.nik)" />
+					<listcell label="@load(each.namaKaryawan)" />
+					<listcell label="@load(each.emailKaryawan)" />
+				</listitem>
+			</template>
+		</listbox>
+	</window>
+</zk>
